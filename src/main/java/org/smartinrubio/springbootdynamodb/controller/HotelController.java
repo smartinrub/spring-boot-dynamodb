@@ -1,5 +1,6 @@
 package org.smartinrubio.springbootdynamodb.controller;
 
+import org.smartinrubio.springbootdynamodb.exception.HotelNotFoundException;
 import org.smartinrubio.springbootdynamodb.model.Hotel;
 import org.smartinrubio.springbootdynamodb.repository.HotelRepository;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,12 @@ public class HotelController {
     @ResponseStatus(HttpStatus.CREATED)
     public Hotel createHotel(@RequestBody Hotel hotel) {
         return repository.save(hotel);
+    }
+
+    @GetMapping("/{hotelId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Hotel readHotel(@PathVariable("hotelId") String id) {
+        return repository.findById(id).orElseThrow(HotelNotFoundException::new);
     }
 
 }

@@ -12,17 +12,18 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(GenericDynamoDBException.class)
-    public void genericDynamoDBExceptionHandler() {
-    }
+    public void genericDynamoDBExceptionHandler() { }
 
     @ResponseStatus(value = HttpStatus.CONFLICT)
     @ExceptionHandler(DuplicateTableException.class)
-    public void duplicateTableExceptionHandler() {
-    }
+    public void duplicateTableExceptionHandler() { }
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(IOException.class)
-    public void IOExceptionHandler() {
+    public void iOExceptionHandler() { }
 
-    }
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(HotelNotFoundException.class)
+    public void hotelNotFoundExceptionHandler() { }
+
 }
