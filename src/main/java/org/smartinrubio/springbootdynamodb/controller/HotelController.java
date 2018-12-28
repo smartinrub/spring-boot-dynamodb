@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/hotel")
 public class HotelController {
@@ -17,9 +19,15 @@ public class HotelController {
     }
 
     @GetMapping("/table")
-    public ResponseEntity createHotelTable() {
+    public ResponseEntity createTable() {
         repository.createTable();
         return ResponseEntity.ok("Table Created!");
+    }
+
+    @GetMapping("/data")
+    public ResponseEntity loadData() throws IOException {
+        repository.loadData();
+        return ResponseEntity.ok("Data Loaded");
     }
 
 }
