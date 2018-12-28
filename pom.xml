@@ -47,7 +47,8 @@
         <dependency>
             <groupId>com.github.derjust</groupId>
             <artifactId>spring-data-dynamodb</artifactId>
-            <version>5.0.4</version>
+            <!-- This version adds support for query lookup strategy -->
+            <version>5.1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- Swagger -->

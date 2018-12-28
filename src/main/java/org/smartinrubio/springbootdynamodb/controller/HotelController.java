@@ -8,9 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
-@RequestMapping("/hotel")
+@RequestMapping("/hotels")
 public class HotelController {
 
     private final HotelRepository repository;
@@ -39,8 +40,21 @@ public class HotelController {
 
     @GetMapping("/{hotelId}")
     @ResponseStatus(HttpStatus.OK)
-    public Hotel readHotel(@PathVariable("hotelId") String id) {
+    public Hotel readHotelById(@PathVariable("hotelId") String id) {
         return repository.findById(id).orElseThrow(HotelNotFoundException::new);
     }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Hotel> readHotelByName(@RequestParam("hotelName") String name) {
+        return repository.findAllByName(name);
+    }
+
+    @DeleteMapping("/{hotelId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteHotel(@PathVariable("hotelId") String id) {
+        repository.deleteById(id);
+    }
+
 
 }
