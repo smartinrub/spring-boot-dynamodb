@@ -35,7 +35,7 @@ public class CustomHotelRepositoryImpl implements CustomHotelRepository {
         try {
             Table table = dynamoDB.createTable(TABLE_NAME,
                     Collections.singletonList(new KeySchemaElement("id", KeyType.HASH)),
-                    Collections.singletonList(new AttributeDefinition("id", ScalarAttributeType.N)),
+                    Collections.singletonList(new AttributeDefinition("id", ScalarAttributeType.S)),
                     new ProvisionedThroughput(10L, 10L));
             table.waitForActive();
 
@@ -64,7 +64,7 @@ public class CustomHotelRepositoryImpl implements CustomHotelRepository {
         while (iterator.hasNext()) {
             currentNode = (ObjectNode) iterator.next();
 
-            Long id = currentNode.path("id").asLong();
+            String id = currentNode.path("id").asText();
             String name = currentNode.path("name").asText();
             String geo = currentNode.path("geo").toString();
 
@@ -80,6 +80,5 @@ public class CustomHotelRepositoryImpl implements CustomHotelRepository {
             }
         }
         parser.close();
-
     }
 }

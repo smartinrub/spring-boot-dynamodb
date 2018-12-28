@@ -7,5 +7,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Geo {
     private final Double latitude;
-    private final Double Longitude;
+    private final Double longitude;
 }

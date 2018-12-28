@@ -1,10 +1,11 @@
 package org.smartinrubio.springbootdynamodb.model;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.smartinrubio.springbootdynamodb.utils.GeoTypeConverter;
+
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
@@ -12,12 +13,14 @@ import lombok.Getter;
 public class Hotel {
 
     @DynamoDBHashKey
-    private final Long id;
+//    @DynamoDBGeneratedUuid(DynamoDBAutoGenerateStrategy.CREATE) // Requires a mutable object
+    private final String id = UUID.randomUUID().toString(); // With this we can have an inmutable object
 
     @DynamoDBAttribute
     private final String name;
 
     @DynamoDBAttribute
+    @DynamoDBTypeConverted(converter = GeoTypeConverter.class)
     private final Geo geo;
 
 }
