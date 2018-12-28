@@ -1,6 +1,7 @@
 package org.smartinrubio.springbootdynamodb.controller;
 
 import org.smartinrubio.springbootdynamodb.repository.HotelRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +17,9 @@ public class HotelController {
     }
 
     @GetMapping("/table")
-    public void createHotelTable() {
+    public ResponseEntity createHotelTable() {
         repository.createTable();
+        return ResponseEntity.ok("Table Created!");
     }
 
 }
