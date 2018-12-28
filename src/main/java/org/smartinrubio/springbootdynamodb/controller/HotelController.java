@@ -44,6 +44,12 @@ public class HotelController {
         return repository.findById(id).orElseThrow(HotelNotFoundException::new);
     }
 
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Hotel updateHotel(@RequestBody Hotel hotel) {
+        return repository.save(hotel);
+    }
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Hotel> readHotelByName(@RequestParam("hotelName") String name) {
