@@ -10,19 +10,19 @@ import java.io.IOException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Internal Error")
     @ExceptionHandler(GenericDynamoDBException.class)
     public void genericDynamoDBExceptionHandler() { }
 
-    @ResponseStatus(value = HttpStatus.CONFLICT)
+    @ResponseStatus(value = HttpStatus.CONFLICT, reason = "Table Already Exists")
     @ExceptionHandler(DuplicateTableException.class)
     public void duplicateTableExceptionHandler() { }
 
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Internal Error")
     @ExceptionHandler(IOException.class)
     public void iOExceptionHandler() { }
 
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Hotel Not Found")
     @ExceptionHandler(HotelNotFoundException.class)
     public void hotelNotFoundExceptionHandler() { }
 

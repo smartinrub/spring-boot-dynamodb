@@ -39,7 +39,6 @@ public class HotelController {
     }
 
     @GetMapping("/{hotelId}")
-    @ResponseStatus(HttpStatus.OK)
     public Hotel readHotelById(@PathVariable("hotelId") String id) {
         return repository.findById(id).orElseThrow(HotelNotFoundException::new);
     }
@@ -51,13 +50,11 @@ public class HotelController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<Hotel> readHotelByName(@RequestParam("hotelName") String name) {
         return repository.findAllByName(name);
     }
 
     @DeleteMapping("/{hotelId}")
-    @ResponseStatus(HttpStatus.OK)
     public void deleteHotel(@PathVariable("hotelId") String id) {
         repository.deleteById(id);
     }
