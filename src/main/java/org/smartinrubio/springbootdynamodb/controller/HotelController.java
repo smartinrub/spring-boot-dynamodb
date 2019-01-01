@@ -3,11 +3,14 @@ package org.smartinrubio.springbootdynamodb.controller;
 import org.smartinrubio.springbootdynamodb.exception.HotelNotFoundException;
 import org.smartinrubio.springbootdynamodb.model.Hotel;
 import org.smartinrubio.springbootdynamodb.repository.HotelRepository;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -33,9 +36,17 @@ public class HotelController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Hotel createHotel(@RequestBody Hotel hotel) {
-        return repository.save(hotel);
+    public ResponseEntity<Hotel> createHotel(@RequestBody Hotel hotel, UriComponentsBuilder uriComponentsBuilder) {
+        Hotel savedHotel = repository.save(hotel);
+        HttpHeaders headers = new HttpHeaders();
+        URI locationUri = uriComponentsBuilder
+                .path("/hotels/")
+                .path(String.valueOf(savedHotel.getId()))
+                .build()
+                .toUri();
+        headers.setLocation(locationUri);
+
+        return new ResponseEntity<>(savedHotel, headers, HttpStatus.CREATED);
     }
 
     @GetMapping("/{hotelId}")
@@ -44,8 +55,11 @@ public class HotelController {
     }
 
     @PutMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Hotel updateHotel(@RequestBody Hotel hotel) {
+
+        repository.findById(hotel.getId()).orElseThrow(HotelNotFoundException::new);
+
         return repository.save(hotel);
     }
 
