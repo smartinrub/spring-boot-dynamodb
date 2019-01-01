@@ -12,6 +12,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/hotels")
@@ -33,6 +35,11 @@ public class HotelController {
     public ResponseEntity loadData() throws IOException {
         repository.loadData();
         return ResponseEntity.ok("Data Loaded");
+    }
+
+    @GetMapping
+    public List<Hotel> readAll() {
+        return Stream.generate(() -> repository.findAll().iterator().next()).collect(Collectors.toList());
     }
 
     @PostMapping
